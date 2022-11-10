@@ -1,9 +1,10 @@
-var express = require('express');
-var router = express.Router();
+let router = require("express").Router()
+let user = require("./users")
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Back End mytinerary' });
-});
+router.use("/users", user)
+
+
+
+
 
 module.exports = router;
