@@ -1,6 +1,6 @@
 let itineraries = [
   {
-    citiId: "636d266347cadae084d4c193",
+    cityId: "636d266347cadae084d4c193",
     name: "Ateneo",
     photo: [
       "https://i0.wp.com/fueradeeje.com/wp-content/uploads/2019/11/1.jpg?resize=1024%2C768&ssl=1",
@@ -14,7 +14,7 @@ let itineraries = [
     userId: "636d231d496430c95104ed88",
   },
   {
-    citiId: "636d266347cadae084d4c193",
+    cityId: "636d266347cadae084d4c193",
     name: "El caminito",
     photo: [
       "https://enviajes.cl/wp-content/uploads/2021/07/Buenos-Aires-Caminito-Enviajes.jpg",
@@ -28,7 +28,7 @@ let itineraries = [
     userId: "636d2302496430c95104ed86",
   },
   {
-    citiId: "636d266347cadae084d4c194",
+    cityId: "636d266347cadae084d4c194",
     name: "Ramen House",
     photo: [
       "https://images-ext-1.discordapp.net/external/YDpNb59ooWCC7S-58wZD6YjNHD4hRdPzhD79xy1DPQI/https/cdn.theculturetrip.com/wp-content/uploads/2013/09/4214974706_c08285fdff_b-1024x768.jpg?width=901&height=676",
@@ -42,7 +42,7 @@ let itineraries = [
     userId: "636d2325496430c95104ed8a",
   },
   {
-    citiId: "636d266347cadae084d4c194",
+    cityId: "636d266347cadae084d4c194",
     name: "1 Day Private Mt Fuji Tour",
     photo: [
       "https://images-ext-1.discordapp.net/external/xkMolEWE-kRb2TXbvQQ3oOSxIhGz0Vh4sO6pqJKUOHY/https/media.tacdn.com/media/attractions-splice-spp-674x446/06/73/17/63.jpg",
@@ -56,7 +56,7 @@ let itineraries = [
     userId: "636d2302496430c95104ed86",
   },
   {
-    citiId: "636d266347cadae084d4c18e",
+    cityId: "636d266347cadae084d4c18e",
     name: "Bateaux Parisiens Seine River Gourmet Dinner & Sightseeing Cruise",
     photo: [
       "https://images-ext-2.discordapp.net/external/tqKrGWzRa_ejt2yEzicMgCXFXugLumE60jEgOsm2A5s/https/i.ytimg.com/vi/3ibIzoRc8RM/maxresdefault.jpg?width=1202&height=676",
@@ -70,7 +70,7 @@ let itineraries = [
     userId: "636d231d496430c95104ed88",
   },
   {
-    citiId: "636d266347cadae084d4c18e",
+    cityId: "636d266347cadae084d4c18e",
     name: "Torre Eiffel tour",
     photo: [
       "https://media.tacdn.com/media/attractions-splice-spp-720x480/0b/d1/9f/57.jpg",
@@ -84,7 +84,7 @@ let itineraries = [
     userId: "636d2333496430c95104ed8c",
   },
   {
-    citiId: "636d266347cadae084d4c18f",
+    cityId: "636d266347cadae084d4c18f",
     name: "Legendary Venice St. Mark's Basilica with Terrace Access & Doge's Palace",
     photo: [
       "https://media.tacdn.com/media/attractions-splice-spp-674x446/06/6b/74/cf.jpg",
@@ -98,7 +98,7 @@ let itineraries = [
     userId: "636d2333496430c95104ed8c",
   },
   {
-    citiId: "636d266347cadae084d4c18f",
+    cityId: "636d266347cadae084d4c18f",
     name: "Venice In a Day: Basilica San Marco, Doges Palace & Gondola ride",
     photo: [
       "https://media.tacdn.com/media/attractions-splice-spp-674x446/06/6b/74/85.jpg",
@@ -112,7 +112,7 @@ let itineraries = [
     userId: "636d2302496430c95104ed86",
   },
   {
-    citiId: "636d266347cadae084d4c18b",
+    cityId: "636d266347cadae084d4c18b",
     name: "Rio de Janeiro Hang Gliding Experience",
     photo: [
       "https://media.tacdn.com/media/attractions-splice-spp-674x446/09/98/26/58.jpg",
@@ -126,7 +126,7 @@ let itineraries = [
     userId: "636d2333496430c95104ed8c",
   },
   {
-    citiId: "636d266347cadae084d4c18b",
+    cityId: "636d266347cadae084d4c18b",
     name: "Favela Walking Tour in Rio de Janeiro",
     photo: [
       "https://cdn.getyourguide.com/img/tour/5b3c75870bdac.jpeg/146.jpg",
@@ -140,7 +140,7 @@ let itineraries = [
     userId: "636d231d496430c95104ed88",
   },
   {
-    citiId: "636d266347cadae084d4c18d",
+    cityId: "636d266347cadae084d4c18d",
     name: "Total London Experience with London Eye, Tower of London, St Paul's",
     photo: [
       "https://media.tacdn.com/media/attractions-splice-spp-674x446/09/93/6a/89.jpg",
@@ -154,7 +154,7 @@ let itineraries = [
     userId: "636d2302496430c95104ed86",
   },
   {
-    citiId: "636d266347cadae084d4c18d",
+    cityId: "636d266347cadae084d4c18d",
     name: "Best of London Including Tower of London, Changing of the Guard, with a Cream Tea or London Eye Upgrade",
     photo: [
       "https://www.londoneye.com/media/oympfbtd/22747_london-eye_1a_wheel_099_rgb_ns-psd.jpg",
@@ -175,7 +175,7 @@ const Itinerary = require("../Itinerary");
 
 itineraries.forEach((itinerary) => {
   Itinerary.create({
-    cityId: itinerary.citiId,
+    cityId: itinerary.cityId,
     name: itinerary.name,
     photo: itinerary.photo,
     description: itinerary.description,
