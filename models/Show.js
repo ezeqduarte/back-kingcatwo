@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
-  hotelid: { type: String, required: true, ref: "hotels" },
+  hotelid:{ type: mongoose.Types.ObjectId, ref: "hotels", required: true },
   name: { type: String, required: true },
   description: { type: String, required: true },
   photo: { type: String, required: true },
