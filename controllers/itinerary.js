@@ -17,16 +17,42 @@ const controller = {
     }
   },
 
-  deleteItinerary: async (req, res) => {
-
-    const _id = req.params.id;    
+  updateItinerary: async (req, res) => {
+    let { id } = req.params;
 
     try {
-      
-      await Itinerary.findOneAndDelete({_id});
+      const itineraryModificated = await Itinerary.findOneAndUpdate(
+        { _id: id },
+        req.body,
+        { new: true }
+      );
+
+      itineraryModificated
+        ? res.status(200).json({
+            id: itineraryModificated._id,
+            success: true,
+            message: "The itinerary has modificated",
+          })
+        : res.status(400).json({
+            success: false,
+            message: "The itinerary does not exist",
+          });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
+
+  deleteItinerary: async (req, res) => {
+    const _id = req.params.id;
+
+    try {
+      await Itinerary.findOneAndDelete({ _id });
 
       res.status(200).json({
-        idDeleted: _id,        
+        idDeleted: _id,
         success: true,
       });
     } catch (error) {
