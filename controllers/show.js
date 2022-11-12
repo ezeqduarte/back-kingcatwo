@@ -17,6 +17,35 @@ const controller = {
       });
     }
   },
+
+  updateShow: async (req, res) => {
+    let { id } = req.params;
+
+    try {
+      const showModificated = await Show.findOneAndUpdate(
+        { _id: id },
+        req.body,
+        { new: true }
+      );
+
+      showModificated
+        ? res.status(200).json({
+            id: showModificated._id,
+            success: true,
+            message: "The show has modificated",
+          })
+        : res.status(400).json({
+            success: false,
+            message: "The show does not exist",
+          });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
+
   deleteShow: async (req, res) => {
     const _id = req.params.id;
 
