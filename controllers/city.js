@@ -18,6 +18,35 @@ const controller = {
           });
     }
   },
+
+  updateCity: async (req, res) => {
+
+    let { id } = req.params;
+
+    try {
+      const cityModificated = await City.findOneAndUpdate(
+        { _id: id },
+        req.body,
+        { new: true }
+      );
+
+      cityModificated
+        ? res.status(200).json({
+            id: cityModificated._id,
+            success: true,
+            message: "The city has modificated",
+          })
+        : res.status(400).json({
+            success: false,
+            message: "The city does not exist",
+          });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
 };
 
 module.exports = controller;
