@@ -47,6 +47,29 @@ const controller = {
       });
     }
   },
+
+  deleteCity: async (req, res) => {
+
+    const {id} = req.params;
+    
+    try {
+      
+      await City.findOneAndDelete({ _id: id});
+
+      res.status(200).json({
+        
+        success: true,
+        message: "The city has deleted",
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        response: error.message,
+      });
+    }
+  },
+
+  
 };
 
 module.exports = controller;
