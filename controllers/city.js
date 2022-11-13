@@ -19,6 +19,38 @@ const controller = {
     }
   },
 
+  readCities: async (req,res)=> {
+
+    let query = {}
+
+    if (req.query.continent) {
+      query = {continent: req.query.continent}
+    }
+
+    if (req.query.name){
+      query = {
+        ...query,
+        name: req.query.name
+      }
+    }
+
+    try {
+      let allCities = await City.find(query).sort({name:"asc"});
+      res.status(201).json({
+        cities: allCities,
+        success: true,
+        message: "The cities are here",
+      });
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: error.message,
+            error: error.status
+          });
+    }
+
+  },
+
   updateCity: async (req, res) => {
 
     let { id } = req.params;
