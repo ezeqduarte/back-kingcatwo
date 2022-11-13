@@ -30,17 +30,25 @@ const controller = {
     if (req.query.name){
       query = {
         ...query,
-        name: req.query.name
+        name: { $regex: req.query.name, $options: "i" },
       }
     }
 
     try {
       let allCities = await City.find(query).sort({name:"asc"});
-      res.status(201).json({
-        cities: allCities,
-        success: true,
-        message: "The cities are here",
-      });
+
+      if (allCities.length!=0) {
+        res.status(201).json({
+          cities: allCities,
+          success: true,
+          message: "The cities are here",
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          message: "The cities no exist",
+        });
+      }
     } catch (error) {
         res.status(400).json({
             success: false,
