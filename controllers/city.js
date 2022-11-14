@@ -49,6 +49,37 @@ const controller = {
     }
   },
 
+  readCity: async (req, res) => {
+    
+    let { id } = req.params;
+
+    try {
+      let cityCaptured = await City.findOne({_id: id}).populate(
+        "userId",
+        "photo && name"
+      );
+
+      if (cityCaptured) {
+        res.status(201).json({
+          cities: cityCaptured,
+          success: true,
+          message: "The cities are here",
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          message: "The city doesnt exist",
+        });
+      }
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error.message,
+        error: error.status,
+      });
+    }
+  },
+
   updateCity: async (req, res) => {
     let { id } = req.params;
 
