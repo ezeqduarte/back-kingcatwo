@@ -2,7 +2,6 @@ const Hotel = require("../models/Hotel");
 
 const controller = {
   create: async (req, res) => {
-   
     try {
       let new_hotel = await Hotel.create(req.body);
       res.status(201).json({
@@ -18,7 +17,6 @@ const controller = {
     }
   },
   updateHotel: async (req, res) => {
-
     let { id } = req.params;
 
     try {
@@ -46,17 +44,13 @@ const controller = {
     }
   },
 
-  
   deleteHotel: async (req, res) => {
+    const { id } = req.params;
 
-    const {id} = req.params;
-    
     try {
-      
-      await Hotel.findOneAndDelete({ _id: id});
+      await Hotel.findOneAndDelete({ _id: id });
 
       res.status(200).json({
-        
         success: true,
         message: "The hotel has deleted",
       });
@@ -68,11 +62,35 @@ const controller = {
     }
   },
 
+  obtainHotel: async (req, res) => {
+    let query = {};
+    let order = {};
+    if (req.query.name) {
+      query = { name: {$regex: req.query.name, $options: "i && x && s"} };
+    }
+    if (req.query.order) {
+      order = {capacity: req.query.order};
+    }
 
 
 
 
+    try {
+      const hotelitos = await Hotel.find(query).sort(order);
 
+      res.status(200).json({
+        success: true,
+        Hotels: hotelitos, 
+        message: "The hotel has been obtained",
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        response: error.message,
+        message: "The hotel is not here :(",
+      });
+    }
+  },
 };
 
 module.exports = controller;
