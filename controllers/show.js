@@ -63,6 +63,41 @@ const controller = {
       });
     }
   },
+
+
+  focusShow: async (req, res) => {
+    let { hotelId } = req.query;
+    try {
+      let show = await Show.find({hotelid: hotelId }).populate("userId", "_id");
+      res.status(201).json({
+        searched: show,
+        success: true,
+        message: "The shows are here",
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 };
 
 module.exports = controller;
