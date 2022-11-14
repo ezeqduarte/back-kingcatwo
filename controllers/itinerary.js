@@ -17,6 +17,27 @@ const controller = {
     }
   },
 
+  readItineraries: async (req, res) => {
+
+    let { cityId } = req.query;
+
+    console.log(cityId);
+
+    try {
+      let itineraries = await Itinerary.find({cityId: cityId }).populate("userId", "_id");
+      res.status(201).json({
+        searched: itineraries,
+        success: true,
+        message: "The Itineraries are here",
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
+
   updateItinerary: async (req, res) => {
     let { id } = req.params;
 
