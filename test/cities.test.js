@@ -36,3 +36,41 @@ describe("GET CITIES", function () {
       });
   });
 });
+
+describe("POST CITIES", function () {
+  it("Deberia testear que el name es un string", function (done) {
+    request(app)
+      .post("/api/cities/")
+      .send({
+        name: "Mendoza",
+        continent: "America",
+        photo:
+          "https://www.redcabanias.com/blog/wp-content/uploads/2019/06/mm1.jpg",
+        population: "13312310",
+        userId: "636d1e66dbb2d08117b1c7c2",
+      })
+      .expect((response) => {
+        assert.typeOf(response.body.id.name, "string", "Name es un string");
+      })
+      .end(function (err, res) {
+        if (err) {
+          return done(err);
+        }
+
+        done();
+      });
+  });
+
+  it("Deberia testar que hay un error 404 al crear mal un hotel", function (done) {
+    request(app)
+      .post("/api/citie/")
+      .expect(404)
+      .end(function (err, res) {
+        if (err) {
+          return done(err);
+        }
+
+        done();
+      });
+  });
+});
