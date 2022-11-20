@@ -5,7 +5,7 @@ const controller = {
     try {
       let new_hotel = await Hotel.create(req.body);
       res.status(201).json({
-        id: new_hotel._id,
+        hotelCreated: new_hotel,
         success: true,
         message: "The hotel was succefuly created",
       });
