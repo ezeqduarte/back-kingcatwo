@@ -1,5 +1,8 @@
+const schema = require("../schemas/hotelSchema");
+const validator = require("../middlewares/validator");
 const {
   updateHotel,
+  create, 
   deleteHotel,
   obtainHotel,
   focusHotel,
@@ -8,9 +11,9 @@ const controller = require("../controllers/hotel");
 
 let router = require("express").Router();
 
-let { create } = controller;
 
-router.route("/").post(create);
+
+router.route("/").post(validator(schema), create);
 
 module.exports = router;
 router.route("/:id").patch(updateHotel);
