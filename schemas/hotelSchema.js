@@ -39,7 +39,7 @@ const schema = joi.object({
         "string.pattern.base": "Only letters alowhed",
         "any.required": "The hotel must have a description",
         "string.base": "Please enter a valid description",
-        "string.max": "The hotel description is too short",
+        "string.min": "The hotel description is too short",
         "string.max": "The hotel description is too long",
         
             })    

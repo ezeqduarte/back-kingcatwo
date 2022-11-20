@@ -1,17 +1,14 @@
 const validator = (schema) => [
-  //Se utiliza [] en el validator porque es una función dentro de una función. (justo en el caso de este middleware)
   (req, res, next) => {
     const data = schema.validate(req.body, { abortEarly: false });
     if (data.error) {
-      return res.json({
+      return res.status(200).json({
         success: false,
-        message: data.error.details,
-
+        message: data.error.details.map(error=> error.message),
       });
     }
     next()
-  },
+  },  
 ];
 
-
-module.exports = validator
+module.exports = validator  
