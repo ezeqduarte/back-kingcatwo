@@ -37,7 +37,9 @@ const controller = {
     }
 
     try {
-      let allCities = await City.find(query).sort({ name: "asc" }).populate("userId", "_id");
+      let allCities = await City.find(query)
+        .sort({ name: "asc" })
+        .populate("userId", "_id");
 
       res.status(200).json({
         cities: allCities,
@@ -53,13 +55,11 @@ const controller = {
     }
   },
 
-
   readCity: async (req, res) => {
-    
     let { id } = req.params;
 
     try {
-      let cityCaptured = await City.findOne({_id: id}).populate(
+      let cityCaptured = await City.findOne({ _id: id }).populate(
         "userId",
         "photo && name"
       );
@@ -97,7 +97,7 @@ const controller = {
 
       cityModificated
         ? res.status(200).json({
-            id: cityModificated._id,
+            cityModificated: cityModificated,
             success: true,
             message: "The city has modificated",
           })
@@ -133,7 +133,5 @@ const controller = {
     }
   },
 };
-
-
 
 module.exports = controller;
