@@ -120,11 +120,13 @@ const controller = {
       await City.findOneAndDelete({ _id: id });
 
       res.status(200).json({
+        cityDeleted: id,
         success: true,
         message: "The city has deleted",
       });
     } catch (error) {
       res.status(400).json({
+        cityDeleted: id,
         success: false,
         response: error.message,
       });
