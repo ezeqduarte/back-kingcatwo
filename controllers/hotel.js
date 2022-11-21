@@ -71,6 +71,9 @@ const controller = {
     if (req.query.order) {
       order = { capacity: req.query.order };
     }
+    if (req.query.userId) {
+      query = {...query, userId: req.query.userId };
+    }
 
     try {
       const hotelitos = await Hotel.find(query).sort(order);
