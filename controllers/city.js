@@ -32,10 +32,16 @@ const controller = {
       };
     }
 
-    try {
-      let allCities = await City.find(query).sort({ name: "asc" });
+    if (req.query.userId) {
+      query = { userId: req.query.userId };
+    }
 
-      res.status(201).json({
+    try {
+      let allCities = await City.find(query)
+        .sort({ name: "asc" })
+        .populate("userId", "_id");
+
+      res.status(200).json({
         cities: allCities,
         success: true,
         message: "The cities are here",
@@ -50,17 +56,16 @@ const controller = {
   },
 
   readCity: async (req, res) => {
-    
     let { id } = req.params;
 
     try {
-      let cityCaptured = await City.findOne({_id: id}).populate(
+      let cityCaptured = await City.findOne({ _id: id }).populate(
         "userId",
         "photo && name"
       );
 
       if (cityCaptured) {
-        res.status(201).json({
+        res.status(200).json({
           cities: cityCaptured,
           success: true,
           message: "The cities are here",
@@ -92,11 +97,11 @@ const controller = {
 
       cityModificated
         ? res.status(200).json({
-            id: cityModificated._id,
+            cityModificated: cityModificated,
             success: true,
             message: "The city has modificated",
           })
-        : res.status(400).json({
+        : res.status(404).json({
             success: false,
             message: "The city does not exist",
           });
@@ -115,18 +120,18 @@ const controller = {
       await City.findOneAndDelete({ _id: id });
 
       res.status(200).json({
+        cityDeleted: id,
         success: true,
         message: "The city has deleted",
       });
     } catch (error) {
       res.status(400).json({
+        cityDeleted: id,
         success: false,
         response: error.message,
       });
     }
   },
 };
-
-
 
 module.exports = controller;
