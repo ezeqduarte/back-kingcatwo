@@ -32,10 +32,14 @@ const controller = {
       };
     }
 
+    if (req.query.userId) {
+      query = { userId: req.query.userId };
+    }
+
     try {
       let allCities = await City.find(query).sort({ name: "asc" });
 
-      res.status(201).json({
+      res.status(200).json({
         cities: allCities,
         success: true,
         message: "The cities are here",
@@ -49,6 +53,31 @@ const controller = {
     }
   },
 
+ /*  readCitiesOfAdmin: async (req, res) => {
+
+    let query = {};
+
+    if (req.query.userId) {
+      query = { userId: req.query.userId };
+    }
+
+    try {
+      let citiesOfAdmin = await City.find(query).sort({ name: "asc" });
+
+      res.status(200).json({
+        cities: citiesOfAdmin,
+        success: true,
+        message: "The cities are here",
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error.message,
+        error: error.status,
+      });
+    }
+  }, */
+
   readCity: async (req, res) => {
     
     let { id } = req.params;
@@ -60,7 +89,7 @@ const controller = {
       );
 
       if (cityCaptured) {
-        res.status(201).json({
+        res.status(200).json({
           cities: cityCaptured,
           success: true,
           message: "The cities are here",
@@ -96,7 +125,7 @@ const controller = {
             success: true,
             message: "The city has modificated",
           })
-        : res.status(400).json({
+        : res.status(404).json({
             success: false,
             message: "The city does not exist",
           });
