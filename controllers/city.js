@@ -37,7 +37,7 @@ const controller = {
     }
 
     try {
-      let allCities = await City.find(query).sort({ name: "asc" });
+      let allCities = await City.find(query).sort({ name: "asc" }).populate("userId", "_id");
 
       res.status(200).json({
         cities: allCities,
@@ -53,30 +53,6 @@ const controller = {
     }
   },
 
- /*  readCitiesOfAdmin: async (req, res) => {
-
-    let query = {};
-
-    if (req.query.userId) {
-      query = { userId: req.query.userId };
-    }
-
-    try {
-      let citiesOfAdmin = await City.find(query).sort({ name: "asc" });
-
-      res.status(200).json({
-        cities: citiesOfAdmin,
-        success: true,
-        message: "The cities are here",
-      });
-    } catch (error) {
-      res.status(400).json({
-        success: false,
-        message: error.message,
-        error: error.status,
-      });
-    }
-  }, */
 
   readCity: async (req, res) => {
     
