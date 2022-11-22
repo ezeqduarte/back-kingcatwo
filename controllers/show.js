@@ -30,7 +30,7 @@ const controller = {
 
       showModificated
         ? res.status(200).json({
-            id: showModificated._id,
+            id: showModificated,
             success: true,
             message: "The show has modificated",
           })
@@ -74,7 +74,7 @@ const controller = {
       query = { ...query, userId: req.query.userId };
     }
     try {
-      let show = await Show.find({ hotelid: hotelId }).populate(
+      let show = await Show.find(query).populate(
         "userId",
         "_id"
       );
