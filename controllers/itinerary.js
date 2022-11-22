@@ -60,7 +60,7 @@ const controller = {
 
       itineraryModificated
         ? res.status(200).json({
-            id: itineraryModificated._id,
+            itineraryModificated: itineraryModificated,
             success: true,
             message: "The itinerary has modificated",
           })
