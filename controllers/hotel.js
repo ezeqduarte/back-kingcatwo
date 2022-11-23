@@ -77,7 +77,7 @@ const controller = {
     }
 
     try {
-      const hotelitos = await Hotel.find(query).sort(order);
+      const hotelitos = await Hotel.find(query).sort(order).populate("userId", ["_id", "name", "lastName"]);
 
       res.status(200).json({
         success: true,
