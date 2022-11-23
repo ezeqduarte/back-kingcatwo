@@ -74,10 +74,7 @@ const controller = {
       query = { ...query, userId: req.query.userId };
     }
     try {
-      let show = await Show.find(query).populate(
-        "userId",
-        "_id"
-      );
+      let show = await Show.find(query).populate("userId", ["_id", "name", "lastName"]);
       res.status(201).json({
         searched: show,
         success: true,

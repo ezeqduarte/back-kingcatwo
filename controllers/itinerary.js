@@ -34,7 +34,7 @@ const controller = {
  
 
     try {
-      let itineraries = await Itinerary.find(query).populate("userId", "_id");
+      let itineraries = await Itinerary.find(query).populate("userId", ["_id", "name", "lastName"]);;
       res.status(201).json({
         searched: itineraries,
         success: true,
