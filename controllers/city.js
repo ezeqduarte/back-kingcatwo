@@ -39,7 +39,7 @@ const controller = {
     try {
       let allCities = await City.find(query)
         .sort({ name: "asc" })
-        .populate("userId", "_id");
+        .populate("userId", ["_id", "name", "lastName"]);
 
       res.status(200).json({
         cities: allCities,
@@ -59,10 +59,7 @@ const controller = {
     let { id } = req.params;
 
     try {
-      let cityCaptured = await City.findOne({ _id: id }).populate(
-        "userId",
-        "photo && name"
-      );
+      let cityCaptured = await City.findOne({ _id: id }).populate("userId", ["_id", "name", "lastName"]);
 
       if (cityCaptured) {
         res.status(200).json({
