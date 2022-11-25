@@ -1,22 +1,22 @@
-const app = require("../app");
-const chai = require("chai");
-const assert = chai.assert;
+const app = require("../app"); //Requiero app
+const chai = require("chai"); //Descargo chai
+const assert = chai.assert; //Me traigo assert de chai, una propiedad que servia para 
 const request = require("supertest");
 
-describe("GET HOTELS", function () {
+describe("GET HOTELS", function () {   //Describe es un grupo de test, y ahi uso get hotels
   it("Deberia testear que es un array", function (done) {
-    request(app)
-      .get("/api/hotels/")
-      .expect((response) => {
-       
-        assert.typeOf(response.body.Hotels, "array", "Es un array");
+    request(app) //hago una request a la app
+      .get("/api/hotels/")  // traigo hotels de api. hotels
+      .expect((response) => {  //le digo que la respuesta que espero sea:
+        
+        assert.typeOf(response.body.Hotels, "array", "Es un array"); // que assert.typeOf me muestre un array 
       })
-      .end(function (err, res) {
+      .end(function (err, res) { //.end para terminar la funcion y en caso de que eso pase retorna un done con un error
         if (err) {
           return done(err);
         }
 
-        done();
+        done()  ;  //en caso de que no haya problema retorna un done sin error.
       });
   });
 

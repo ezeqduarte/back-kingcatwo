@@ -34,9 +34,9 @@ function mustSignInResponse(req,res) {
 }
 
 function invalidCredentialsResponse(req,res) {
-    return res.status(401).json({
+    return res.status(200).json({
         success: false,
-        message: 'email or password incorrect'
+        message: ['User or password not found!'],
     })
 }
 
