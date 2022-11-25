@@ -1,9 +1,9 @@
 const controller = require("../controllers/user");
 
-let router = require("express").Router()
+let router = require("express").Router();
 
-let {create}=controller
+let { create } = controller;
 
-router.route("/").post(create)
+router.route("/").post(create);
 
 module.exports = router;
