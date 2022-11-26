@@ -63,7 +63,11 @@ const controller = {
     try {
       const verifiedPassword = bcryptjs.compareSync(password, user.password);
       if (verifiedPassword) {
-        const userDb = await User.findOneAndUpdate({ _id: user.id }, { logged: true }, {new: true});
+        const userDb = await User.findOneAndUpdate(
+          { _id: user.id },
+          { logged: true },
+          { new: true }
+        );
         const token = jwt.sign(
           {
             id: userDb._id,
@@ -75,6 +79,7 @@ const controller = {
           process.env.KEY_JWT,
           { expiresIn: 60 * 60 * 24 }
         );
+
         return res.status(200).json({
           response: { user, token },
           succes: true,
@@ -86,8 +91,10 @@ const controller = {
       next(error);
     }
   },
+
   signInWithToken: async (req, res, next) => {
     let { user } = req;
+    console.log(user);
     try {
       return res.json({
         response: {
@@ -98,7 +105,7 @@ const controller = {
             role: user.role,
           },
           success: true,
-          message: "Welcome to my Tinerary " + user.name
+          message: "Welcome to my iTinerary " + user.name,
         },
       });
     } catch (error) {
