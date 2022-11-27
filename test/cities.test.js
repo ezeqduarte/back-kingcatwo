@@ -74,3 +74,20 @@ describe("POST CITIES", function () {
       });
   });
 });
+
+describe("DELETE CITIES", function () {
+  it("Deberia testear que la ciudad se elimino correctamente", function (done) {
+    const id = "6382f5ab8bad74d721bb9373";
+
+    request(app)
+      .delete(`/api/cities/${id}`)
+      .expect(200)
+      .end(function (err, res) {
+        if (err) {
+          return done(err);
+        }
+
+        done();
+      });
+  });
+});
