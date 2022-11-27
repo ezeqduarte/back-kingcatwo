@@ -1,14 +1,14 @@
 const controller = require("../controllers/itinerary");
+const schema = require("../schemas/itinerarySchema");
+const validator = require("../middlewares/validator");
 
-let router = require("express").Router()
+let router = require("express").Router();
 
-let {create, deleteItinerary , updateItinerary , readItineraries}=controller
+let { create, deleteItinerary, updateItinerary, readItineraries } = controller;
 
-router.route("/").post(create)
-router.route("/:id").delete(deleteItinerary)
-router.route("/:id").put(updateItinerary)
-router.route("/").get(readItineraries)
-
-
+router.post("/", validator(schema), create);
+router.route("/:id").delete(deleteItinerary);
+router.route("/:id").put(updateItinerary);
+router.route("/").get(readItineraries);
 
 module.exports = router;
