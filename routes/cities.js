@@ -8,7 +8,7 @@ let { create, readCities, updateCity, deleteCity, readCity } = controller;
 
 router.route("/").post(validator(schema), create);
 router.route("/").get(readCities);
-router.route("/:id").put(updateCity);
+router.route("/:id").put(validator(schema), updateCity);
 router.route("/:id").get(readCity);
 router.route("/:id").delete(deleteCity);
 
