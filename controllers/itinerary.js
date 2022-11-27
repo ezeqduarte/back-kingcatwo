@@ -5,7 +5,7 @@ const controller = {
     try {
       let new_itinerary = await Itinerary.create(req.body);
       res.status(201).json({
-        id: new_itinerary._id,
+        id: new_itinerary,
         success: true,
         message: "The Itinerary was succefuly created",
       });

@@ -5,7 +5,7 @@ const controller = {
     try {
       let new_show = await Show.create(req.body);
       res.status(201).json({
-        id: new_show._id,
+        id: new_show,
         success: true,
         message: "The show was succefuly created",
       });
