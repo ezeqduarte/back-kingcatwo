@@ -95,11 +95,12 @@ const controller = {
 
   signInWithToken: async (req, res, next) => {
     let { user } = req;
-    console.log(user);
+    /* console.log(user); */
     try {
       return res.json({
         response: {
           user: {
+            id: user.id,
             name: user.name,
             photo: user.photo,
             logged: user.logged,
