@@ -124,6 +124,56 @@ const controller = {
       next(error);
     }
   },
+
+  getDatos: async (req, res, next) => {
+    const { id } = req.params;
+    try {
+      const user = await User.findById({ _id: id });
+      if (user) {
+        res.status(200).json({
+          user: user,
+          success: true,
+          message: "The User has finded",
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: "The User does not exist",
+        });
+      }
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
+
+  editDatos: async (req, res, next) => {
+    const { id } = req.params;
+    try {
+      const user = await User.findByIdAndUpdate({ _id: id }, req.body, {
+        new: true,
+      });
+      if (user) {
+        res.status(200).json({
+          user: user,
+          success: true,
+          message: "The User has been Updated",
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: "The User does not exist",
+        });
+      }
+    } catch (error) {
+      res.status(404).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
 };
 
 module.exports = controller;
