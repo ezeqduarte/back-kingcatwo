@@ -1,5 +1,5 @@
 const User= require("../models/User");
-const { invalidCredentialsResponse } = require("../config/responses")
+const { invalidCredentialsResponse } = require("../config/responses") //Corrobora que la cuenta exista y que el email coincida con el de la base de datos
 
 async function accountExistsSignIn(req, res, next) {
     const user = await User.findOne({email: req.body.email})
@@ -16,7 +16,7 @@ async function accountExistsSignIn(req, res, next) {
         //console.log(req.user)
         return next()
     }
-    return invalidCredentialsResponse(req,res)
+    return invalidCredentialsResponse(req,res)  //Es la repsuesta que indica que el usuario no existe
 }
 
 module.exports = accountExistsSignIn
