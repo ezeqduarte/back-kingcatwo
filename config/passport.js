@@ -1,5 +1,5 @@
 const passport = require("passport");
-const passportJwt = require("passport-jwt");
+const passportJwt = require("passport-jwt"); ///Se genera para desencriptar el token, el bcrypt encripta
 
 const { KEY_JWT } = process.env;
 const User = require("../models/User");
