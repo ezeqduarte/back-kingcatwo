@@ -37,7 +37,7 @@ const controller = {
             message: "The hotel does not exist",
           });
     } catch (error) {
-      res.status(400).json({
+      res.status(404).json({
         success: false,
         message: error.message,
       });
