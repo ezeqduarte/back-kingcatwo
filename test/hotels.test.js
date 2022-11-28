@@ -40,24 +40,42 @@ describe("GET HOTELS", function () {   //Describe es un grupo de test, y ahi uso
 
 
 
-describe("POST HOTELS", function () {
-  it("Deberia testear que es un number", function (done) {
-    request(app)
-      .post("/api/hotels/")
-      .send({
-        name: "The Big Bolivar",
-        photo: "Bolivar.png",
-        capacity: 23213123,
-        description: "Bolivar",
-        userId: "636d1e66dbb2d08117b1c7c2"  ,
-        cityId: "636d266347cadae084d4c18b",
-      })
-      .expect((response) => {
+// describe("POST HOTELS", function () {
+//   it("Deberia testear que es un number", function (done) {
+//     request(app)
+//       .post("/api/hotels/")
+//       .send({
+//         name: "The Big Bolivar",
+//         photo: "Bolivar.png",
+//         capacity: 23213123,
+//         description: "Bolivar",
+//         userId: "636d1e66dbb2d08117b1c7c2"  ,
+//         cityId: "636d266347cadae084d4c18b",
+//       })
+//       .expect((response) => {
       
-        assert.typeOf(response.body.hotelCreated.capacity, "number", "Es un number");
-      })
-      .expect(201)
+//         assert.typeOf(response.body.hotelCreated.capacity, "number", "Es un number");
+//       })
+//       .expect(201)
 
+//       .end(function (err, res) {
+//         if (err) {
+//           return done(err);
+//         }
+
+//         done();
+//       });
+//   });
+
+// });
+
+describe("DELETE HOTEL", function () {
+  it("Deberia testear que el hotel se elimino correctamente", function (done) {
+    const id = "638420a410a1db40a73b54c7";
+
+    request(app)
+      .delete(`/api/cities/${id}`)
+      .expect(200)
       .end(function (err, res) {
         if (err) {
           return done(err);
@@ -66,21 +84,6 @@ describe("POST HOTELS", function () {
         done();
       });
   });
-
-  // it("Deberia testear que capacity es un number", function (done) {
-  //   request(app)
-  //     .get("/api/hotels/")
-  //     .expect((response) => {
-  //       response.body.Hotels.forEach((hotel) =>
-  //         assert.typeOf(hotel, "object", "Es un objeto")
-  //       );
-  //     })
-  //     .end(function (err, res) {
-  //       if (err) {
-  //         return done(err);
-  //       }
-
-  //       done();
-  //     });
-  // });
 });
+
+
