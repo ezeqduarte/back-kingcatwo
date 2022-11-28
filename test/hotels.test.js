@@ -1,22 +1,25 @@
 const app = require("../app"); //Requiero app
 const chai = require("chai"); //Descargo chai
-const assert = chai.assert; //Me traigo assert de chai, una propiedad que servia para 
+const assert = chai.assert; //Me traigo assert de chai, una propiedad que servia para
 const request = require("supertest");
 
-describe("GET HOTELS", function () {   //Describe es un grupo de test, y ahi uso get hotels
+describe("GET HOTELS", function () {
+  //Describe es un grupo de test, y ahi uso get hotels
   it("Deberia testear que es un array", function (done) {
     request(app) //hago una request a la app
-      .get("/api/hotels/")  // traigo hotels de api. hotels
-      .expect((response) => {  //le digo que la respuesta que espero sea:
-        
-        assert.typeOf(response.body.Hotels, "array", "Es un array"); // que assert.typeOf me muestre un array 
+      .get("/api/hotels/") // traigo hotels de api. hotels
+      .expect((response) => {
+        //le digo que la respuesta que espero sea:
+
+        assert.typeOf(response.body.Hotels, "array", "Es un array"); // que assert.typeOf me muestre un array
       })
-      .end(function (err, res) { //.end para terminar la funcion y en caso de que eso pase retorna un done con un error
+      .end(function (err, res) {
+        //.end para terminar la funcion y en caso de que eso pase retorna un done con un error
         if (err) {
           return done(err);
         }
 
-        done()  ;  //en caso de que no haya problema retorna un done sin error.
+        done(); //en caso de que no haya problema retorna un done sin error.
       });
   });
 
@@ -38,8 +41,6 @@ describe("GET HOTELS", function () {   //Describe es un grupo de test, y ahi uso
   });
 });
 
-
-
 // describe("POST HOTELS", function () {
 //   it("Deberia testear que es un number", function (done) {
 //     request(app)
@@ -53,7 +54,7 @@ describe("GET HOTELS", function () {   //Describe es un grupo de test, y ahi uso
 //         cityId: "636d266347cadae084d4c18b",
 //       })
 //       .expect((response) => {
-      
+
 //         assert.typeOf(response.body.hotelCreated.capacity, "number", "Es un number");
 //       })
 //       .expect(201)
@@ -71,10 +72,13 @@ describe("GET HOTELS", function () {   //Describe es un grupo de test, y ahi uso
 
 describe("DELETE HOTEL", function () {
   it("Deberia testear que el hotel se elimino correctamente", function (done) {
-    const id = "638420a410a1db40a73b54c7";
+    const id = "6384f46072d62fc913d86362";
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzODEzNDg5YzBjNjViOTc3NjYwZDAzMSIsIm5hbWUiOiJFemVxdWllbCIsInBob3RvIjoiaHR0cHM6Ly9lbmNyeXB0ZWQtdGJuMC5nc3RhdGljLmNvbS9pbWFnZXM_cT10Ym46QU5kOUdjU0NzYTQ3MFhFVkMzQjBCWGxYbEJCbTAzY1M4akQyRmpVekZUbU5zZzlHQ3hIRzhOY1I4RWo5MkI4bllZbnQ4aTJ5LU1rJnVzcXA9Q0FVIiwibG9nZ2VkIjp0cnVlLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2Njk2NTg2ODAsImV4cCI6MTY2OTc0NTA4MH0.11ewyvg-E5EQ2bUGoj-1gQJiN8gThSjhqVd4fEfwapA";
 
     request(app)
-      .delete(`/api/cities/${id}`)
+      .delete(`/api/hotels/${id}`)
+      .auth(token, { type: "bearer" })
       .expect(200)
       .end(function (err, res) {
         if (err) {
@@ -85,5 +89,3 @@ describe("DELETE HOTEL", function () {
       });
   });
 });
-
-

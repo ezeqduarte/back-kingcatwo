@@ -77,10 +77,14 @@ describe("POST CITIES", function () {
 
 describe("DELETE CITIES", function () {
   it("Deberia testear que la ciudad se elimino correctamente", function (done) {
-    const id = "6382f5ab8bad74d721bb9373";
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzODEzNDg5YzBjNjViOTc3NjYwZDAzMSIsIm5hbWUiOiJFemVxdWllbCIsInBob3RvIjoiaHR0cHM6Ly9lbmNyeXB0ZWQtdGJuMC5nc3RhdGljLmNvbS9pbWFnZXM_cT10Ym46QU5kOUdjU0NzYTQ3MFhFVkMzQjBCWGxYbEJCbTAzY1M4akQyRmpVekZUbU5zZzlHQ3hIRzhOY1I4RWo5MkI4bllZbnQ4aTJ5LU1rJnVzcXA9Q0FVIiwibG9nZ2VkIjp0cnVlLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2Njk2NTg2ODAsImV4cCI6MTY2OTc0NTA4MH0.11ewyvg-E5EQ2bUGoj-1gQJiN8gThSjhqVd4fEfwapA";
+
+    const idCity = "6382c589b2f859b8004b0891";
 
     request(app)
-      .delete(`/api/cities/${id}`)
+      .delete(`/api/cities/${idCity}`)
+      .auth(token, { type: "bearer" })
       .expect(200)
       .end(function (err, res) {
         if (err) {
