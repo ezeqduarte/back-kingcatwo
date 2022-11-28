@@ -59,7 +59,11 @@ const controller = {
     let { id } = req.params;
 
     try {
-      let cityCaptured = await City.findOne({ _id: id }).populate("userId", ["_id", "name", "lastName"]);
+      let cityCaptured = await City.findOne({ _id: id }).populate("userId", [
+        "_id",
+        "name",
+        "lastName",
+      ]);
 
       if (cityCaptured) {
         res.status(200).json({
@@ -86,22 +90,30 @@ const controller = {
     let { id } = req.params;
 
     try {
-      const cityModificated = await City.findOneAndUpdate(
-        { _id: id },
-        req.body,
-        { new: true }
-      );
+      let cityOfUser = await City.findById(id);
+      if (cityOfUser.userId.equals(req.user.id)) {
+        const cityModificated = await City.findOneAndUpdate(
+          { _id: id },
+          req.body,
+          { new: true }
+        );
 
-      cityModificated
-        ? res.status(200).json({
-            cityModificated: cityModificated,
-            success: true,
-            message: "The city has modificated",
-          })
-        : res.status(404).json({
-            success: false,
-            message: "The city does not exist",
-          });
+        cityModificated
+          ? res.status(200).json({
+              cityModificated: cityModificated,
+              success: true,
+              message: "The city has modificated",
+            })
+          : res.status(404).json({
+              success: false,
+              message: "The city does not exist",
+            });
+      } else {
+        res.status(401).json({
+          success: false,
+          message: "Unauthorized",
+        });
+      }
     } catch (error) {
       res.status(400).json({
         success: false,
@@ -112,18 +124,27 @@ const controller = {
 
   deleteCity: async (req, res) => {
     const { id } = req.params;
-
+  
     try {
-      await City.findOneAndDelete({ _id: id });
-
-      res.status(200).json({
-        cityDeleted: id,
-        success: true,
-        message: "The city has deleted",
-      });
+      let cityOfUser = await City.findById(id);
+     
+      if (cityOfUser.userId.equals(req.user.id)) {
+        let cityDeleted = await City.findOneAndDelete({ _id: id });
+        console.log(cityDeleted);
+        res.status(200).json({
+          cityDeleted: cityDeleted._id,
+          success: true,
+          message: "The city has deleted",
+        });
+      } else {
+        res.status(401).json({
+          success: false,
+          message: "Unauthorized",
+        });
+      }
     } catch (error) {
+     
       res.status(400).json({
-        cityDeleted: id,
         success: false,
         response: error.message,
       });
