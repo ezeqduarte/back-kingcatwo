@@ -30,7 +30,7 @@ const controller = {
 
       showModificated
         ? res.status(200).json({
-            id: showModificated._id,
+            id: showModificated,
             success: true,
             message: "The show has modificated",
           })
@@ -64,11 +64,17 @@ const controller = {
     }
   },
 
-
   focusShow: async (req, res) => {
-    let { hotelId } = req.query;
+    // let { hotelId } = req.query;
+    let query = {};
+    if (req.query.hotelId) { //Hace referencia al postman
+      query = { ...query, hotelid: req.query.hotelId }; 
+    }
+    if (req.query.userId) {
+      query = { ...query, userId: req.query.userId };
+    }
     try {
-      let show = await Show.find({hotelid: hotelId }).populate("userId", "_id");
+      let show = await Show.find(query).populate("userId", ["_id", "name", "lastName"]);
       res.status(201).json({
         searched: show,
         success: true,
@@ -81,23 +87,6 @@ const controller = {
       });
     }
   },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 };
 
 module.exports = controller;

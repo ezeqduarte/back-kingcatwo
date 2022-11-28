@@ -5,7 +5,7 @@ const controller = {
     try {
       let new_hotel = await Hotel.create(req.body);
       res.status(201).json({
-        id: new_hotel._id,
+        hotelCreated: new_hotel,
         success: true,
         message: "The hotel was succefuly created",
       });
@@ -28,7 +28,7 @@ const controller = {
 
       hotelModificated
         ? res.status(200).json({
-            id: hotelModificated._id,
+            hotelito: hotelModificated,
             success: true,
             message: "The hotel has modificated",
           })
@@ -53,6 +53,7 @@ const controller = {
       res.status(200).json({
         success: true,
         message: "The hotel has deleted",
+        hotel: id,
       });
     } catch (error) {
       res.status(400).json({
@@ -71,9 +72,12 @@ const controller = {
     if (req.query.order) {
       order = { capacity: req.query.order };
     }
+    if (req.query.userId) {
+      query = {...query, userId: req.query.userId };
+    }
 
     try {
-      const hotelitos = await Hotel.find(query).sort(order);
+      const hotelitos = await Hotel.find(query).sort(order).populate("userId", ["_id", "name", "lastName"]);
 
       res.status(200).json({
         success: true,
