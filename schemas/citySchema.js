@@ -3,6 +3,7 @@ const joi = require("joi");
 const schema = joi.object({
   name: joi.string().pattern(/[a-z]/).required().min(3).max(45).messages({
     "any.required": "Name is required",
+    "string.empty": "Name is empty",
     "string.base": "Name is empty",
     "string.min": "Name is too short",
     "string.max": "Name is too long",
@@ -11,13 +12,15 @@ const schema = joi.object({
   continent: joi.string().pattern(/[a-z]/).required().min(4).max(10).messages({
     "any.required": "Continent is required",
     "string.base": "Continent is empty",
+    "string.empty": "Continent is empty",
     "string.min": "Continent is too short",
     "string.max": "Continent is too long",
     "string.pattern.base": "Continent is not a number",
   }),
   photo: joi.string().required().messages({
     "any.required": "Photo is required",
-    "string.base": "photo is empty",
+    "string.base": "Photo is empty",
+    "string.empty": "Photo is empty",
 
   }),
   population: joi.number().required().messages({

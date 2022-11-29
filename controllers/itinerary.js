@@ -5,7 +5,7 @@ const controller = {
     try {
       let new_itinerary = await Itinerary.create(req.body);
       res.status(201).json({
-        id: new_itinerary._id,
+        id: new_itinerary,
         success: true,
         message: "The Itinerary was succefuly created",
       });
@@ -18,23 +18,21 @@ const controller = {
   },
 
   readItineraries: async (req, res) => {
-
-    let query = {}
+    let query = {};
 
     if (req.query.cityId) {
-      query = {...query,
-        cityId : req.query.cityId
-      }
+      query = { ...query, cityId: req.query.cityId };
     }
-    if(req.query.userId){
-      query = {...query,
-        userId : req.query.userId
-      }
+    if (req.query.userId) {
+      query = { ...query, userId: req.query.userId };
     }
- 
 
     try {
-      let itineraries = await Itinerary.find(query).populate("userId", ["_id", "name", "lastName"]);;
+      let itineraries = await Itinerary.find(query).populate("userId", [
+        "_id",
+        "name",
+        "lastName",
+      ]);
       res.status(201).json({
         searched: itineraries,
         success: true,
@@ -52,22 +50,31 @@ const controller = {
     let { id } = req.params;
 
     try {
-      const itineraryModificated = await Itinerary.findOneAndUpdate(
-        { _id: id },
-        req.body,
-        { new: true }
-      );
+      let tineraryOfUser = await Itinerary.findById(id);
+      console.log(tineraryOfUser);
+      if (tineraryOfUser.userId.equals(req.user.id)) {
+        const itineraryModificated = await Itinerary.findOneAndUpdate(
+          { _id: id },
+          req.body,
+          { new: true }
+        );
 
-      itineraryModificated
-        ? res.status(200).json({
-            itineraryModificated: itineraryModificated,
-            success: true,
-            message: "The itinerary has modificated",
-          })
-        : res.status(400).json({
-            success: false,
-            message: "The itinerary does not exist",
-          });
+        itineraryModificated
+          ? res.status(200).json({
+              itineraryModificated: itineraryModificated,
+              success: true,
+              message: "The itinerary has modificated",
+            })
+          : res.status(400).json({
+              success: false,
+              message: "The itinerary does not exist",
+            });
+      } else {
+        res.status(401).json({
+          success: false,
+          message: "Unauthorized",
+        });
+      }
     } catch (error) {
       res.status(400).json({
         success: false,
@@ -80,12 +87,20 @@ const controller = {
     const _id = req.params.id;
 
     try {
-      await Itinerary.findOneAndDelete({ _id });
+      let tineraryOfUser = await Itinerary.findById(_id);
+      if (tineraryOfUser.userId.equals(req.user.id)) {
+        await Itinerary.findOneAndDelete({ _id });
 
-      res.status(200).json({
-        idDeleted: _id,
-        success: true,
-      });
+        res.status(200).json({
+          idDeleted: _id,
+          success: true,
+        });
+      } else {
+        res.status(401).json({
+          success: false,
+          message: "Unauthorized",
+        });
+      }
     } catch (error) {
       res.status(400).json({
         success: false,

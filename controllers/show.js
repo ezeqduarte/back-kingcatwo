@@ -5,7 +5,7 @@ const controller = {
     try {
       let new_show = await Show.create(req.body);
       res.status(201).json({
-        id: new_show._id,
+        id: new_show,
         success: true,
         message: "The show was succefuly created",
       });
@@ -22,22 +22,30 @@ const controller = {
     let { id } = req.params;
 
     try {
-      const showModificated = await Show.findOneAndUpdate(
-        { _id: id },
-        req.body,
-        { new: true }
-      );
+      let showUser = await Show.findById(id);
+      if (showUser.userId.equals(req.user.id)) {
+        const showModificated = await Show.findOneAndUpdate(
+          { _id: id },
+          req.body,
+          { new: true }
+        );
 
-      showModificated
-        ? res.status(200).json({
-            id: showModificated,
-            success: true,
-            message: "The show has modificated",
-          })
-        : res.status(400).json({
-            success: false,
-            message: "The show does not exist",
-          });
+        showModificated
+          ? res.status(200).json({
+              id: showModificated,
+              success: true,
+              message: "The show has modificated",
+            })
+          : res.status(400).json({
+              success: false,
+              message: "The show does not exist",
+            });
+      } else {
+        res.status(401).json({
+          success: false,
+          message: "Unauthorized",
+        });
+      }
     } catch (error) {
       res.status(400).json({
         success: false,
@@ -50,12 +58,20 @@ const controller = {
     const _id = req.params.id;
 
     try {
-      await Show.findOneAndDelete({ _id });
+      let showUser = await Show.findById(_id);
+      if (showUser.userId.equals(req.user.id)) {
+        await Show.findOneAndDelete({ _id });
 
-      res.status(200).json({
-        idDeleted: _id,
-        success: true,
-      });
+        res.status(200).json({
+          idDeleted: _id,
+          success: true,
+        });
+      } else {
+        res.status(401).json({
+          success: false,
+          message: "Unauthorized",
+        });
+      }
     } catch (error) {
       res.status(400).json({
         success: false,
@@ -67,14 +83,19 @@ const controller = {
   focusShow: async (req, res) => {
     // let { hotelId } = req.query;
     let query = {};
-    if (req.query.hotelId) { //Hace referencia al postman
-      query = { ...query, hotelid: req.query.hotelId }; 
+    if (req.query.hotelId) {
+      //Hace referencia al postman
+      query = { ...query, hotelid: req.query.hotelId };
     }
     if (req.query.userId) {
       query = { ...query, userId: req.query.userId };
     }
     try {
-      let show = await Show.find(query).populate("userId", ["_id", "name", "lastName"]);
+      let show = await Show.find(query).populate("userId", [
+        "_id",
+        "name",
+        "lastName",
+      ]);
       res.status(201).json({
         searched: show,
         success: true,
