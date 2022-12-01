@@ -34,31 +34,32 @@ const controller = {
       if (reactionOfTinerary) {
         if (reactionOfTinerary.userId.includes(req.user.id)) {
           //tendria que sacarlo
-          await Reaction.findOneAndUpdate(
+
+          const reactionOfTineraryEdited = await Reaction.findOneAndUpdate(
             { _id: reactionOfTinerary._id },
             { $pull: { userId: req.user.id } },
             { new: true }
           );
           res.status(200).json({
-            reaction: reactionOfTinerary,
+            reaction: reactionOfTineraryEdited,
             success: true,
             message: "The reaction modificated dislike",
           });
         } else {
           //tendria que pushearlo
-          await Reaction.findOneAndUpdate(
+          const reactionOfTineraryEdited = await Reaction.findOneAndUpdate(
             { _id: reactionOfTinerary._id },
             { $push: { userId: req.user.id } },
             { new: true }
           );
           res.status(200).json({
-            reaction: reactionOfTinerary,
+            reaction: reactionOfTineraryEdited,
             success: true,
             message: "The reaction modificated like",
           });
         }
       } else {
-        res.status(404).json({         
+        res.status(404).json({
           success: false,
           message: "The reaction dosnt exist",
         });
@@ -72,7 +73,7 @@ const controller = {
   },
 
   getReactions: async (req, res) => {
-    let query = {}
+    let query = {};
 
     if (req.query.itineraryId) {
       query = { ...query, itineraryId: req.query.itineraryId };

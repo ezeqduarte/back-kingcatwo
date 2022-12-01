@@ -7,7 +7,7 @@ const passport = require("../config/passport");
 let { newReaction, postReaction, getReactions } = controller;
 
 router.post("/", validator(schema), newReaction);
-router.put("/", passport.authenticate("jwt", { session: false }), postReaction);
+router.patch("/", passport.authenticate("jwt", { session: false }), postReaction);
 router.get("/", getReactions);
 
 module.exports = router;
