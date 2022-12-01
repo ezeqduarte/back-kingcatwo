@@ -30,7 +30,8 @@ const controller = {
         "name",
         "lastName",
         "_id",
-        "logged"
+        "logged",
+        "itineraryId"
       ]);;
       res.status(201).json({
         comments: get_comment,
