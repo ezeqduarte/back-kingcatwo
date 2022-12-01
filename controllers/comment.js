@@ -2,8 +2,9 @@ const Comment = require("../models/Comment");
 
 const controller = {
   create: async (req, res) => {
+    let userId=req.user.id //Me trae el ID del PASSPORT, y el passport es el id del token del id del usuario.
     try {
-      let new_comment = await Comment.create(req.body);
+      let new_comment = await Comment.create({userId: userId, comment: req.body.comment, date: req.body.date, itineraryId: req.body.itineraryId});
       res.status(201).json({
         id: new_comment,
         success: true,
