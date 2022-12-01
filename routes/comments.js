@@ -15,11 +15,9 @@ router.post(
 ); //esto es lo que continua en el posman
 
 router.get(
-    "/",
-    passport.authenticate("jwt", { session: false }),
-    validator(schema),
-    getcomment
-  ); //esto es lo que continua en el posman
+  "/",
 
+  getcomment
+); //esto es lo que continua en el posman
 
 module.exports = router;

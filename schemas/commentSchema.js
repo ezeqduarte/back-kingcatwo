@@ -1,7 +1,7 @@
 const joi = require("joi");
 
 const schema = joi.object({
-  showId: joi.any(),
+  itineraryId: joi.any(),
   userId: joi.any(),
   date: joi.date().required(),
   comment: joi.string().required().min(10).messages({

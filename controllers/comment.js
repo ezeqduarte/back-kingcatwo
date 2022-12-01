@@ -21,13 +21,19 @@ const controller = {
     try {
       let query = {}; 
 
-      if (req.query.showId) {
-        query = { ...query, showId: req.query.showId };
+      if (req.query.itineraryId) {
+        query = { ...query, itineraryId: req.query.itineraryId };
       }
 
-      let get_comment = await Comment.find(query).sort({date:"desc"});
+      let get_comment = await Comment.find(query).sort({date:"desc"}).populate("userId", [
+        "photo",
+        "name",
+        "lastName",
+        "_id",
+        "logged"
+      ]);;
       res.status(201).json({
-        id: get_comment,
+        comments: get_comment,
         success: true,
         message: "The Comment is here",
       });
