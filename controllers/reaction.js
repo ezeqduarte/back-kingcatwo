@@ -79,18 +79,76 @@ const controller = {
       query = { ...query, itineraryId: req.query.itineraryId };
     }
 
+    if (req.query.userId) {
+      query = { ...query, userId: req.query.userId };
+    }
+
+    if (req.query.itineraryId) {
+      try {
+        let reactions = await Reaction.find(query);
+        res.status(201).json({
+          reactions: reactions,
+          success: true,
+          message: "The reaction are here",
+        });
+      } catch (error) {
+        res.status(400).json({
+          success: false,
+          message: error.message,
+          error: error.status,
+        });
+      }
+    } else if (req.query.userId) {
+      try {
+        let reactions = await Reaction.find(query).sort({itineraryId: "asc"}).populate("itineraryId", ["name", "photo"]);
+        console.log(reactions);
+        if (req.query.userId == req.user.id) {
+          res.status(201).json({
+            reactions: reactions,
+            success: true,
+            message: "The reaction are here",
+          });
+        } else {
+          res.status(401).json({
+            success: false,
+            message: "Unauthorized",
+          });
+        }
+      } catch (error) {
+        res.status(400).json({
+          success: false,
+          message: error.message,
+          error: error.status,
+        });
+      }
+    }
+  },
+
+  deleteReaction: async (req, res) => {
+    let { id } = req.params;
+
     try {
-      let reactions = await Reaction.find(query);
-      res.status(201).json({
-        reactions: reactions,
-        success: true,
-        message: "The reaction are here",
-      });
+      let reaction = await Reaction.findOneAndUpdate(
+        { _id: id },
+        { $pull: { userId: req.user.id } },
+        { new: true }
+      );
+      if (reaction) {
+        res.status(200).json({
+          reaction: reaction,
+          message: `Reacion has deleted`,
+          success: true,
+        });
+      } else {
+        res.status(404).json({
+          message: `reaction doesnt exist`,
+          success: false,
+        });
+      }
     } catch (error) {
       res.status(400).json({
-        success: false,
         message: error.message,
-        error: error.status,
+        success: false,
       });
     }
   },
