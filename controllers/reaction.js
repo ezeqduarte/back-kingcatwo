@@ -100,7 +100,7 @@ const controller = {
       }
     } else if (req.query.userId) {
       try {
-        let reactions = await Reaction.find(query).populate();
+        let reactions = await Reaction.find(query).sort({itineraryId: "asc"}).populate("itineraryId", ["name", "photo"]);
         console.log(reactions);
         if (req.query.userId == req.user.id) {
           res.status(201).json({
