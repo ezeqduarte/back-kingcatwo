@@ -10,7 +10,7 @@ let hotels = [
       description:
         "In this modern hotel located in a cristal skycraper you can enjoy te best comodities and is only 2 mins to the bus.",
       cityId: "636d266347cadae084d4c189", 
-      userId: "636d1e66dbb2d08117b1c7c2", //Cris Zamora - Admin de todos los hoteles, el verdadero.
+      userId: "636d1e66dbb2d08117b1c7c2", 
     },
     {
       name: "Hyatt Place Bangkok Sukhumvit",

@@ -29,6 +29,10 @@ const controller = {
       query = { ...query, itineraryId: req.query.itineraryId };
     }
 
+    if (req.query.showId) {
+      query = { showId: req.query.showId };
+    }
+
     try {
       let reactionOfTinerary = await Reaction.findOne(query);
       if (reactionOfTinerary) {
@@ -83,13 +87,17 @@ const controller = {
       query = { ...query, userId: req.query.userId };
     }
 
+    if (req.query.showId) {
+      query = { showId: req.query.showId };
+    }
+
     if (req.query.itineraryId) {
       try {
         let reactions = await Reaction.find(query);
         res.status(201).json({
           reactions: reactions,
           success: true,
-          message: "The reaction are here",
+          message: "The reactions are here",
         });
       } catch (error) {
         res.status(400).json({
@@ -100,13 +108,15 @@ const controller = {
       }
     } else if (req.query.userId) {
       try {
-        let reactions = await Reaction.find(query).sort({itineraryId: "asc"}).populate("itineraryId", ["name", "photo"]);
+        let reactions = await Reaction.find(query)
+          .sort({ itineraryId: "asc" })
+          .populate("itineraryId", ["name", "photo"]);
         console.log(reactions);
         if (req.query.userId == req.user.id) {
           res.status(201).json({
             reactions: reactions,
             success: true,
-            message: "The reaction are here",
+            message: "The reaction are here ESTOY ACA",
           });
         } else {
           res.status(401).json({
@@ -114,6 +124,23 @@ const controller = {
             message: "Unauthorized",
           });
         }
+      } catch (error) {
+        res.status(400).json({
+          success: false,
+          message: error.message,
+          error: error.status,
+        });
+      }
+    } else if (req.query.showId) {
+      try {
+        let reactions = await Reaction.find(query)
+          .sort({ showId: "asc" })
+          .populate("showId", ["name", "photo"]);
+        res.status(201).json({
+          reactions: reactions,
+          success: true,
+          message: "The reactions are here",
+        });
       } catch (error) {
         res.status(400).json({
           success: false,
