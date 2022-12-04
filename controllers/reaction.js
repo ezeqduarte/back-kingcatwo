@@ -110,7 +110,8 @@ const controller = {
       try {
         let reactions = await Reaction.find(query)
           .sort({ itineraryId: "asc" })
-          .populate("itineraryId", ["name", "photo"]);
+          .populate("itineraryId", ["name", "photo"])
+          .populate("showId", ["name", "photo"]);
         console.log(reactions);
         if (req.query.userId == req.user.id) {
           res.status(201).json({
